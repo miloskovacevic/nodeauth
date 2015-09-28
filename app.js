@@ -15,7 +15,6 @@ var db = mongoose.connection;
 var expressValidator = require('express-validator');
 
 
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -74,6 +73,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+// ovo ce nam pomoci da sacuvamo user objekat
+// koji ce da vazi za sve rute, pa mozemo da mu pristupimo
+// i kroz layout.jade
+app.get('*', function(req, res, next){
+  res.locals.user = req.user || null;
+  next();
+});
 
 app.use('/', routes);
 app.use('/users', users);
